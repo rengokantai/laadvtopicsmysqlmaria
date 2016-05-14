@@ -76,3 +76,50 @@ create table ms (milli time(3),micro datetime(6));
 insert into ms(milli,micro) select now(),now();
 select * from ms;
 ```
+#####2 The sphinx
+######install sphinx
+```
+select * from information_schema.engines where engine='sphinx';
+show global variables like 'plugin_dir';
+```
+
+execute shell command:
+```
+MariaDB> \! ls -l /usr/lib/mysql/plugin
+```
+```
+select * from information_schema.engines where engine='sphinx'\G
+INSTALL SONAME 'ha_sphinx';
+```
+######creating a sphinx table
+```
+create table from_sphinx(document_id integer unsigned not null,weight integer not null,query varchar(3072)not null,group_id integer,_sph_count integer index(query))engine=sphinx
+```
+#####3 nosql integration
+######installing the handlersocket plugin
+```
+install plugin handlersocket soname'handlersocket';
+```
+verify
+```
+select plugin_status from information_schema.plugins where plugin_name='handlersocket';
+```
+######configure
+handlersocket_port='9998'  
+handlersocket_port_wr='9999'   
+go to /etc/mysql/my.cnf  
+```
+handlersocket_address='127.0.0.1'
+handlersocket_port='9998'
+handlersocket_port_wr='9999'
+```
+and
+```
+/etc/init.d/mysql restart
+```
+test
+```
+telnet localhost 9998
+ctrl+] quit to telnet.
+`quit` to quit telnet.
+```
