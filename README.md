@@ -141,3 +141,8 @@ format: like 1-123-12
 ```
 change master "stream1" to MASTER_HOST='',MASTER_USER='user',MASTER_PASSWORD='password',MASTER_USE_GTID=current_pos;
 ```
+#####6
+######understanding and installing
+```
+install plugin auth_socket soname 'auth_socket.so';
+```
