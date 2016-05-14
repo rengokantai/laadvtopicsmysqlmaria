@@ -123,3 +123,21 @@ telnet localhost 9998
 ctrl+] quit to telnet.
 `quit` to quit telnet.
 ```
+#####4 Global transaction identifier GTID
+######setting up GTID in mysql
+```
+[mysqld]
+gtid-mode=ON
+log-bin
+log-slave-updates
+enforce-gtid-consistency
+```
+######setting up GTID in mariadb
+format: like 1-123-12  
+1 is domain number  
+123 is server id  
+12 is sequence
+######exploring multi
+```
+change master "stream1" to MASTER_HOST='',MASTER_USER='user',MASTER_PASSWORD='password',MASTER_USE_GTID=current_pos;
+```
